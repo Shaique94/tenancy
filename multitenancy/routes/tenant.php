@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CreateRoleController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -27,23 +28,26 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', function () {
         return 'This is your multi-tenant. The id of the current tenant is ' . tenant('id');
-//         $user = User::get();
-// dd($user);
+        //         $user = User::get();
+        // dd($user);
     });
 
-    Route::get('/login',[AuthController::class,'login'])->name('tenant.login');
-    Route::post('/login',[AuthController::class,'loginStore'])->name('tenant.login.store');
+    Route::get('/login', [AuthController::class, 'login'])->name('tenant.login');
+    Route::post('/login', [AuthController::class, 'loginStore'])->name('tenant.login.store');
 
-    Route::get('/register',[AuthController::class,'register'])->name('tenant.login.register');
-    Route::post('/register',[AuthController::class,'registerStore'])->name('tenant.register.store');
+    Route::get('/register', [AuthController::class, 'register'])->name('tenant.login.register');
+    Route::post('/register', [AuthController::class, 'registerStore'])->name('tenant.register.store');
 
-    Route::post('/logout',[AuthController::class,'logout'])->name('tenant.logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('tenant.logout');
 
-    Route::get('/dashboard',function(){
+    Route::get('/dashboard', function () {
         return view('tenant.dashboard');
         // dd(auth()->user()->toArray());
         // dd('This is your tenant dashboard');
     })->name('tenant.dashboard');
-    
 
+    //from here we are creating new roles
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/create-role', [CreateRoleController::class, 'createRole'])->name('tenant.roles.store');
+    });
 });

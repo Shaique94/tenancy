@@ -12,5 +12,12 @@
         @csrf
         <button type="submit">Logout</button>
     </form>
+
+    <h1>Create new roles</h1>
+    <form method="POST" action="{{route('tenant.roles.store')}}">
+        @csrf
+        <input type="text" name="name" placeholder="Role Name">
+        <button type="submit">Create Role</button>
+    </form>
 </body>
 </html>
