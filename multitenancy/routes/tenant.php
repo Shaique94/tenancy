@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CreateRoleController;
+use App\Http\Controllers\TenantRoleController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -48,6 +49,6 @@ Route::middleware([
 
     //from here we are creating new roles
     Route::middleware(['auth'])->group(function () {
-        Route::post('/create-role', [CreateRoleController::class, 'createRole'])->name('tenant.roles.store');
-    });
+        Route::get('/select-roles', [TenantRoleController::class, 'showForm'])->name('tenant.roles.select');
+        Route::post('/select-roles', [TenantRoleController::class, 'store'])->name('tenant.roles.store');    });
 });
