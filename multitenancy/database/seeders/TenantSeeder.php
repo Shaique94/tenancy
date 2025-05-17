@@ -14,7 +14,7 @@ class TenantSeeder extends Seeder
     {
         $t1 = \App\Models\Tenant::create([
             'id' => 'tenant1',
-            'name' => 'Tenant 1',
+            'name' => 'Tenant 1', 
         ]);
         $t1->domains()->create([
             'domain' => 'tenant1.localhost',

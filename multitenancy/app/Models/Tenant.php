@@ -10,4 +10,9 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
+    protected $guarded = [];
+    protected $casts = [
+        'data' => 'array', // ✅ Tell Eloquent to treat 'data' as JSON
+    ];
+
 }
